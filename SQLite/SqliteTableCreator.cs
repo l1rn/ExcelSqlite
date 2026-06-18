@@ -20,7 +20,7 @@ public class SqliteTableCreator : IDisposable
     {
         using var cmd =
             conn.CreateCommand();
-
+        Console.WriteLine($"Creating: {sql}");
         cmd.CommandText =
             sql.ToString();
 
@@ -66,15 +66,13 @@ public class SqliteTableCreator : IDisposable
     public void EasyCreateAndInsert(string dbName, List<DataTable> dataTables)
     {
         var builder = new SqliteSchemaBuilder();
-        InsertOption insertSql;
-        var creator = new SqliteTableCreator(dbName);
 
         foreach(var dt in dataTables)
         {
             string creatSql = builder.BuildCreate(dt.TableName, dt);
-            insertSql = builder.BuildInsert(dt.TableName, dt);
-            creator.Create(creatSql);
-            creator.Insert(insertSql, dt);
+            InsertOption insertSql = builder.BuildInsert(dt.TableName, dt);
+            Create(creatSql);
+            Insert(insertSql, dt);
         }
     }
     public void Dispose()

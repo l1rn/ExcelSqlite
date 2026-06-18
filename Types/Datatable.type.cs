@@ -2,8 +2,12 @@
 
 public class CreateDataTableOption
 {
-    public required string Path { get; init; }
+    public string Path { set; get; }
 
-    public required string Name { get; init; }
-
+    public string Name { set; get; }
+    public CreateDataTableOption(string path, string name)
+    {
+        Path = path;
+        Name = name;
+    }
 }

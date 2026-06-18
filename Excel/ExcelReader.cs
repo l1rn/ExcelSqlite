@@ -44,7 +44,7 @@ namespace ExcelToSqlite.Library.Excel
             List<DataTable> dataTables = new List<DataTable>();
             foreach(var o in options)
             {
-                dataTables.Append(CreateDataTable(o.Path, o.Name));
+                dataTables.Add(CreateDataTable(o.Path, o.Name));
             }
             return dataTables;
         }
