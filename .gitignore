@@ -1,0 +1,20 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio user files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+.vs/
+
+# NuGet packages (if present)
+packages/
+
+# Generated files
+*.cache
+*.log
