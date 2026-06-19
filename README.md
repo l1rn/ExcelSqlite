@@ -1,12 +1,48 @@
+Requirement C# 12+ & .NET 8+
 Usage:
 ```c#
-List<CreateDataTableOption> opts = new List<CreateDataTableOption>
-{
-    new("products.xlsx", "Products"),
-};
+List<TableOption> tables =
+[
+    new TableOption
+    {
+        Name = "Products",
+        ExcelPath = "products.xlsx",
 
-List<DataTable> dataTables = ExcelReader.CreateDataTables(opts);
+        
+    },
+    new TableOption
+    {
+        Name = "PickUpPoints",
+        ExcelPath = "pickUpPoints.xlsx"
+    },
+    new TableOption
+    {
+        Name = "Users",
+        ExcelPath = "users.xlsx",
+        UniqueColumns =
+        [
+            "ФИО"
+        ]
+    },
+    new TableOption
+    {
+        Name = "Orders",
+        ExcelPath = "orders.xlsx",
+        ForeignKeys = [
+            new ForeignKeyOption(
+                "Адрес пункта выдачи",
+                "PickUpPoints",
+                "Id"
+            ),
+            new ForeignKeyOption(
+                "ФИО авторизированного клиента",
+                "Users",
+                "ФИО"
+            )
+        ]
+    }
+];
+
 var creator = new SqliteTableCreator("demo.sqlite");
-
-creator.EasyCreateAndInsert("demo.sqlite", dataTables);
+creator.EasyCreateAndInsert("demo.sqlite", tables);
 ```

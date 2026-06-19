@@ -1,5 +1,6 @@
-#pragma warning disable 1591
+namespace ExcelToSqlite.Library.Models;
 
+#pragma warning disable 1591
 public class CreateDataTableOption
 {
     public string Path { set; get; }

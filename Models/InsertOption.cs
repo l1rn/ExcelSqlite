@@ -1,5 +1,6 @@
-
+namespace ExcelToSqlite.Library.Models;
 #pragma warning disable 1591
+
 public class InsertOption
 {
     public required string Sql { get; init; }

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <LandVersion>11.0</LandVersion>
+    <LangVersion>12.0</LangVersion>
   </PropertyGroup>
 
   

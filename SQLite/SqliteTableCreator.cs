@@ -1,7 +1,8 @@
-using System.Text;
 using System.Data;
 using Microsoft.Data.Sqlite;
 using ExcelToSqlite.Library.Mapping;
+using ExcelToSqlite.Library.Models;
+using ExcelToSqlite.Library.Excel;
 
 namespace ExcelToSqlite.Library.SQLite;
 
@@ -63,14 +64,32 @@ public class SqliteTableCreator : IDisposable
         tr.Commit();
     }
 
-    public void EasyCreateAndInsert(string dbName, List<DataTable> dataTables)
+    public void EasyCreateAndInsert(string dbName, List<TableOption> tables)
     {
         var builder = new SqliteSchemaBuilder();
 
-        foreach(var dt in dataTables)
+        foreach(var table in tables)
         {
-            string creatSql = builder.BuildCreate(dt.TableName, dt);
-            InsertOption insertSql = builder.BuildInsert(dt.TableName, dt);
+            DataTable dt =
+            ExcelReader.CreateDataTable(
+                table.ExcelPath,
+                table.Name
+            );
+            
+            string creatSql = 
+                builder.BuildCreate(
+                    dt.TableName, 
+                    dt,
+                    table.ForeignKeys,
+                    table.UniqueColumns
+                );
+
+            InsertOption insertSql = 
+                builder.BuildInsert(
+                    dt.TableName, 
+                    dt
+                );
+
             Create(creatSql);
             Insert(insertSql, dt);
         }

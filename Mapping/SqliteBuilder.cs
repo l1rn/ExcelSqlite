@@ -1,6 +1,7 @@
 
 using System.Data;
 using System.Text;
+using ExcelToSqlite.Library.Models;
 
 namespace ExcelToSqlite.Library.Mapping;
 
@@ -15,7 +16,9 @@ public class SqliteSchemaBuilder
 
     public string BuildCreate(
         string tn,
-        DataTable dt
+        DataTable dt,
+        List<ForeignKeyOption>? foreignKeys = null,
+        List<string>? uniqueColumns = null
     )
     {
         var sql = new StringBuilder();
@@ -32,14 +35,31 @@ public class SqliteSchemaBuilder
         foreach(DataColumn column in dt.Columns)
         {
             sql.Append(", ");
+            
             sql.Append(
                 $"[{column.ColumnName}] "
             );
+            
             sql.Append(
                 $"{mapper.Map(column.DataType)}"
             );
+
+            if(uniqueColumns?.Contains(column.ColumnName) == true)
+                sql.Append(" UNIQUE");
         }
 
+        if(foreignKeys != null)
+        {
+            foreach(var fk in foreignKeys)
+            {
+                sql.Append(", ");
+
+                sql.Append(
+                    $"FOREIGN KEY([{fk.Column}])" +
+                    $"REFERENCES [{fk.ReferencedTable}]([{fk.ReferencedColumn}])"
+                );
+            }
+        }
         sql.Append(");");
         return sql.ToString();
     }

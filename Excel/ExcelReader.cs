@@ -3,6 +3,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Text;
 using ExcelDataReader;
+using ExcelToSqlite.Library.Models;
 
 namespace ExcelToSqlite.Library.Excel
 {
