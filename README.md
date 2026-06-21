@@ -7,8 +7,6 @@ List<TableOption> tables =
     {
         Name = "Products",
         ExcelPath = "products.xlsx",
-
-        
     },
     new TableOption
     {
